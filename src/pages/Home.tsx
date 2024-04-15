@@ -1,8 +1,10 @@
+import Layout from "../components/Layout"
+
 //src/pages/Home.tsx
 export const Home = () => {
     return (
-      <>
-        <h1>Home Page</h1>
-      </>
-    )
+        <Layout>
+          <h1>This is home page</h1>
+        </Layout>
+      )
   }

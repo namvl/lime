@@ -1,9 +1,11 @@
 //src/pages/About.tsx
 
+import Layout from "../components/Layout"
+
 export const About = () => {
   return (
-    <>
-      <h1>About Page</h1>
-    </>
+    <Layout>
+      <h1>This is about page</h1>
+    </Layout>
   )
 }
