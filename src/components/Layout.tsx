@@ -108,6 +108,14 @@ function Layout({ children }: LayoutProps) {
           <ListItemText primary="About" />
         </ListItemButton>
       </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton href="/products">
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary="Product List" />
+        </ListItemButton>
+      </ListItem>
     </List>
   )
 
