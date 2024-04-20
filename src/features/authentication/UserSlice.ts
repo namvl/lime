@@ -59,7 +59,7 @@ export const selectUser = (state: RootState) => state.user;
 
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import { type LoginResponse } from "../../app/loginApi"
+import { loginApi, type LoginResponse } from "../../app/loginApi"
 import axios from "axios"
 
 // Định nghĩa kiểu dữ liệu cho một sản phẩm
@@ -87,15 +87,11 @@ const initialState = {
 
 // Action async để login lay token
 export const authenticate = createAsyncThunk("auth/login", async () => {
-
-  try {
-    const response = await axios.post<LoginResponse>('https://backengine-on48.fly.dev/login', { email: "namvl@hotmail.com", password: "Conmeo123-", });
-    console.log(JSON.stringify(response));
-    
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to login: ' + error);
-  }
+  const response = await loginApi({
+    email: "namvl@hotmail.com",
+    password: "Conmeo123-",
+  })
+  return await response
 })
 
 // Tạo slice cho sản phẩm
@@ -103,10 +99,6 @@ export const usersSlice = createAppSlice({
   name: "users",
   initialState,
   reducers: {
-    login(state, action){
-      //
-      state.accessToken = "test"
-    }
   },
   extraReducers: builder => {
     // Xử lý trạng thái pending khi authenticate được gọi
@@ -120,9 +112,6 @@ export const usersSlice = createAppSlice({
         state.isLoading = false
         state.error = null
         state.accessToken = action.payload.accessToken
-
-        
-        //console.log("authenticate.fulfilled accessToken: "+ state.accessToken);
         
       })
       // Xử lý trạng thái rejected khi authenticate gặp lỗi
