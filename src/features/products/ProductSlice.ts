@@ -1,4 +1,3 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
 
 // Định nghĩa kiểu dữ liệu cho một sản phẩm
@@ -24,21 +23,14 @@ const initialState = {
   error: null
 } satisfies ProductsState as ProductsState
 
-// Action async để lấy danh sách sản phẩm từ API
-export const fetchProducts = createAsyncThunk(
-  'products/fetchProducts',
-  async () => {
-    const response = await fetch('https://reqres.in/api/products/')
-    return (await response.json())
-  }
-)
-
 // Tạo slice cho sản phẩm
 export const productsSlice = createAppSlice({
   name: "products",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    
+    /*
     // Xử lý trạng thái pending khi fetchProducts được gọi
     builder.addCase(fetchProducts.pending, (state) => {
       state.isLoading = true
@@ -54,10 +46,10 @@ export const productsSlice = createAppSlice({
     .addCase(fetchProducts.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.payload + ""
-    })
+    }) */
   },
 })
 
 // Export action creators và reducer của slice
-export const { } = productsSlice.actions;
+export const {} = productsSlice.actions;
 export default productsSlice.reducer;

@@ -3,9 +3,10 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { productsSlice } from "../features/products/ProductSlice"
 import { usersSlice } from "../features/authentication/UserSlice"
+import { apiSlice } from "../features/products/apiSlice"
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(productsSlice, usersSlice)
+const rootReducer = combineSlices(productsSlice, usersSlice, apiSlice)
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>
 
@@ -13,12 +14,16 @@ export type RootState = ReturnType<typeof rootReducer>
 // when setting up tests that need the same store config
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
-    reducer: rootReducer,
+  reducer: rootReducer,
     preloadedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(apiSlice.middleware)
   })
   // configure listeners using the provided defaults
   // optional, but required for `refetchOnFocus`/`refetchOnReconnect` behaviors
   setupListeners(store.dispatch)
+  console.log(JSON.stringify(store.getState()));
+  
   return store
 }
 

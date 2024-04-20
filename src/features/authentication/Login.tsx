@@ -9,7 +9,6 @@ export const Login = () => {
     const token = useAppSelector((state: RootState) => {        
         return state.users.accessToken
     } )
-    //const productList = useAppSelector((state: RootState) => state.products.data)
     useEffect(() => {
         dispatch(authenticate())
       }, [dispatch])

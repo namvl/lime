@@ -1,36 +1,35 @@
-import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+// import { fetchProducts } from "./ProductSlice"
+import { useAppSelector } from "../../app/hooks"
 import { type RootState } from "../../app/store"
-import Layout from "../../components/Layout"
-import { fetchProducts } from "./ProductSlice"
+import { useFetchProductsQuery } from "./apiSlice"
 
 export const ProductList = () => {
-  const dispatch = useAppDispatch()
-  const productList = useAppSelector((state: RootState) => state.products.data)
+  //const dispatch = useAppDispatch()
+  const isLoading = useAppSelector((state: RootState) => state.users.isLoading)
+  console.log(isLoading);
+  
+  const errorA = useAppSelector((state: RootState) => state.users.error)
+  console.log(errorA);
+  
+  const {
+    data: products,
+    isFetching,
+    isSuccess,
+    error,
+  } = useFetchProductsQuery()
+  console.log(error)
+
+  console.log(products)
+
+  return (
+    <>
+      <h1>Product List</h1>
+    </>
+  )
+  /*
   const isLoading = useAppSelector(
     (state: RootState) => state.products.isLoading,
   )
   const error = useAppSelector((state: RootState) => state.products.error)
-
-  useEffect(() => {
-    dispatch(fetchProducts())
-  }, [dispatch])
-
-  if (isLoading) {
-    return <h1>... Loading</h1>
-  }
-  if (error != null) {
-    return <h1>... Error</h1>
-  }
-  
-  return (
-    <Layout>
-      <h1>Product List</h1>
-      <ul>
-        {productList.map(product => (
-          <li key={product.id}>{product.name}</li>
-        ))}
-      </ul>
-    </Layout>
-  )
+  */
 }
